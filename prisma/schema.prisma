@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Church {
+  id          BigInt     @id @default(autoincrement())
+  createdAt   DateTime?  @default(now()) @db.Timestamptz(6)
+  nickname    String     @unique @db.VarChar
+  observations String?
+  meetingDay  String?    @db.VarChar
+  meetingTime String?    @db.VarChar
+  leaders     Disciple[] @relation("churchLeaders")
+}
+
+model Disciple {
+  id             BigInt     @id @default(autoincrement())
+  createdAt      DateTime?  @default(now()) @db.Timestamptz(6)
+  name           String     @unique @db.VarChar
+  email          String     @unique @db.VarChar
+  phone          String?    @db.VarChar
+  birthdate      DateTime?  @db.Date
+  isLeader       Boolean?   @default(false)
+  isPastor       Boolean?   @default(false)
+  convertionDate DateTime?  @db.Date
+  churchs        Church[]   @relation("churchLeaders")
+  disciplerId    BigInt?
+  discipler      Disciple?  @relation("discipler", fields: [disciplerId], references: [id], onUpdate: NoAction)
+  companionship  Disciple[] @relation("discipler")
+}

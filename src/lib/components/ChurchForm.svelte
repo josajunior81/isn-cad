@@ -12,11 +12,11 @@
   <div class="space-y-3">
     <label class="label">
       <span>Como é chamada</span>
-      <input id="nickname" name="nickname" class="input" type="text" placeholder="Como é chamada a igreja na casa" value={formData.nickname} />
+      <input id="nickname" name="nickname" class="input" type="text" placeholder="Como é chamada a igreja na casa" bind:value={formData.nickname} />
     </label>
     <label class="label">
       <span>Dia do encontro</span>
-      <select id="meeting_day" name="meeting_day" class="select" value={formData.meeting_day}>
+      <select id="meeting_day" name="meeting_day" class="select" bind:value={formData.meeting_day}>
         <option value="">Selecione...</option>
         <option value="domingo">Domingo</option>
         <option value="segunda">Segunda</option>
@@ -29,19 +29,19 @@
     </label>  
     <label class="label">
       <span>Horário do encontro</span>
-      <select id="meeting_time" name="meeting_time" class="select" value={formData.meeting_time}>
+      <select id="meeting_time" name="meeting_time" class="select" bind:value={formData.meeting_time}>
         <option value="">Selecione...</option>
         <option value="manhã">Manhã</option>
         <option value="tarde">Tarde</option>
         <option value="noite">Noite</option>
       </select>
     </label>
-    <!-- <label class="label">
+    <label class="label">
       <span>Líder</span>
       <select class="select" value={formData.leader}>
         <option value="">Selecione...</option>
       </select>
-    </label>   -->
+    </label>  
   </div>
 
   <button type="submit" class="btn variant-filled">Save</button>
