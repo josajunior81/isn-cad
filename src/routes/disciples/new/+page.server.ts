@@ -1,11 +1,9 @@
 import prisma from '$lib/prisma';
 import type { Actions, PageServerLoad } from './$types';
 
-export const load = (async ({ params }) => {
-  const church = await prisma.church.findUnique({
-    where: { id: +params.id }
-  });
-  return  { nickname: church?.nickname, meeting_day: church?.meetingDay, meeting_time: church?.meetingTime };
+export const load = (async () => {
+  const response = await prisma.church.findMany()
+  return  { churchs : response.map(r => ({value: r.id, label: r.nickname, keywords: r.nickname})) };
 }) satisfies PageServerLoad;
  
 export const actions = {
