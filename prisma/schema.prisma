@@ -22,7 +22,7 @@ model Disciple {
   id             BigInt     @id @default(autoincrement())
   createdAt      DateTime?  @default(now()) @db.Timestamptz(6)
   name           String     @unique @db.VarChar
-  email          String     @unique @db.VarChar
+  email          String?     @unique @db.VarChar
   phone          String?    @db.VarChar
   birthdate      DateTime?  @db.Date
   isLeader       Boolean?   @default(false)

@@ -1,11 +1,18 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { Autocomplete, type AutocompleteOption } from '@skeletonlabs/skeleton';
+	import { Autocomplete, type AutocompleteOption, type PopupSettings, popup } from '@skeletonlabs/skeleton';
 	export let formData: any
   export let churchs: any
 
+  let popupSettings: PopupSettings = {
+	  event: 'focus',
+	  target: 'popupAutocomplete',
+	  placement: 'bottom',
+  };
+
   const flavorOptions: AutocompleteOption[] = churchs
   
+
   let inputDemo = '';
 
   function onDemoSelection(event: any): void {
@@ -25,20 +32,16 @@
 		</label>
 		<label class="label">
 			<span>Bloco</span>
-			<select class="select">
+			<select class="select" disabled>
 				<option value="1">Beira Mar</option>
 			</select>
 		</label>
 		<label class="label">
 			<span>Igreja na casa</span>
-			<!-- <select class="select">
-				<option value="0">Selecione...</option>
-        {#each churchs as church }
-        <option value="{church.id}">{church.nickname}</option>
-        {/each}
-			</select> -->
-      <input class="input" type="search" name="demo" bind:value={inputDemo} placeholder="Search..." />
-      <Autocomplete bind:input={inputDemo} options={flavorOptions} on:selection={onDemoSelection} />
+      <input class="input" type="search" name="demo" bind:value={inputDemo} placeholder="Digite para filtrar" use:popup={popupSettings}/>
+      <div data-popup="popupAutocomplete">
+        <Autocomplete bind:input={inputDemo} options={flavorOptions} on:selection={onDemoSelection} class="card w-full max-w-sm max-h-48 p-4 overflow-y-auto"/>
+      </div>
 		</label>
 		<label class="label">
 			<span>Discipulador</span>

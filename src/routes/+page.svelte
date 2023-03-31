@@ -1,5 +1,4 @@
 <nav class="list-nav">
-	<!-- (optionally you can provde a label here) -->
 	<ul>
 		<li>
 			<a href="/churchs">
