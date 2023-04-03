@@ -6,7 +6,7 @@ export const load = (async () => {
   return  { churchs : response.map(r => ({value: r.id, label: r.nickname, keywords: r.nickname})) };
 }) satisfies PageServerLoad;
  
-export const actions = {
+export const actions: Actions = {
   default: async ({ request }) => {
     const data = Object.fromEntries(await request.formData());
 

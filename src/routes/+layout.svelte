@@ -7,21 +7,34 @@
 	// Most of your app wide CSS should be put in this file
 	import '../app.postcss';
   import { AppShell, AppBar, LightSwitch, storePopup, TabGroup, Tab, AppRail, AppRailTile } from '@skeletonlabs/skeleton';
-	import { goto } from '$app/navigation';
+	import { goto, invalidate } from '$app/navigation';
 	import { writable, type Writable } from 'svelte/store';
   import { page } from '$app/stores';
   import logo from "$lib/assets/favicon.png"
+	import type { LayoutData } from './$types';
+	import { onMount } from 'svelte';
 
   storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
   let railValue: Writable<number> = writable(0);
 
-</script>
+  export let data: LayoutData
 
-<!-- App Shell -->
+  $: ({ supabase, session } = data)
+
+  onMount(() => {
+    const { data } = supabase.auth.onAuthStateChange((event, _session) => {
+      if (_session?.expires_at !== session?.expires_at) {
+        invalidate('supabase:auth')
+      }
+    })
+
+    return () => data.subscription.unsubscribe()
+  })
+</script>
+{#if data.session }
 <AppShell>
 	<svelte:fragment slot="header">
-		<!-- App Bar -->
 		<AppBar gridColumns="grid-cols-3" slotDefault="place-self-center" slotTrail="place-content-end">
 			<svelte:fragment slot="lead">
         <a href="/churchs">
@@ -52,3 +65,8 @@
     <slot />
   </div>
 </AppShell>
+{:else }
+<div class="px-10 py-10">
+  <slot />
+</div>
+{/if}
