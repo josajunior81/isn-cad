@@ -31,6 +31,11 @@
 
     return () => data.subscription.unsubscribe()
   })
+
+
+  async function signout() {
+    await fetch('/api/signout', { method: "POST"})
+  }
 </script>
 {#if data.session }
 <AppShell>
@@ -44,6 +49,7 @@
       <strong class="text-xl uppercase">Discípulos Beira Mar</strong>
 			<svelte:fragment slot="trail">
         <LightSwitch />
+        <button type="button" class="btn variant-filled-surface" on:click={signout}>Sair</button>
       </svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
